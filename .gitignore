@@ -1,6 +1,8 @@
-/target
-data
+/data/
+/dist/
+/node_modules/
+.env
+*.log
+*.db
+*.db.lock
 .DS_Store
-vaultbin.db
-vaultbin
-vaultbin.toml

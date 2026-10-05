@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Encrypted paste sharing with private links."
+    />
+    <title>Loggerbin</title>
+    <link rel="icon" type="image/svg+xml" href="/static/logo.svg" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script type="module" src="/static/app.js"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <a class="brand" href="/" aria-label="Loggerbin, new paste"
+          ><img src="/static/logo.svg" width="40" height="40" alt="" /><span
+            >Loggerbin</span
+          ></a
+        >
+        <span class="tagline">Private links. Simple sharing.</span>
+      </header>
+      <section class="intro">
+        <p class="eyebrow">A little privacy goes a long way</p>
+        <h1 id="heading">Paste it. Encrypt it. Share it.</h1>
+        <p id="description">
+          Your text is encrypted in this browser. Only people with the complete
+          link can read it.
+        </p>
+      </section>
+      <section class="workspace" aria-label="Paste workspace">
+        <div class="workspace-top">
+          <span id="mode" class="pill">New paste</span
+          ><span id="byte-count">0 bytes</span>
+        </div>
+        <form id="composer" autocomplete="off">
+          <label for="content" class="sr-only">Paste content</label>
+          <textarea
+            id="content"
+            rows="17"
+            spellcheck="false"
+            autocomplete="off"
+            autocapitalize="off"
+            placeholder="Code, a note, or something you need to share..."
+          ></textarea>
+          <div class="toolbar">
+            <div class="expiry">
+              <label for="expiration">Expires after</label
+              ><select id="expiration" disabled>
+                <option value="86400">1 day</option>
+              </select>
+            </div>
+            <button id="create" type="submit" disabled>
+              Create private link <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </form>
+        <div id="viewer" hidden>
+          <pre id="paste-text" tabindex="0"></pre>
+          <div class="toolbar">
+            <span id="expires"></span>
+            <div class="actions">
+              <button id="copy-content" class="secondary" type="button">
+                Copy text</button
+              ><button id="download" class="secondary" type="button">
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="sharing" class="share" hidden>
+        <label for="share-link">Your private link</label>
+        <div class="share-row">
+          <input
+            id="share-link"
+            type="text"
+            readonly
+            autocomplete="off"
+            spellcheck="false"
+          /><button id="copy-link" type="button">Copy link</button>
+        </div>
+        <p>
+          Keep the whole link private. Anyone you send it to can read and save
+          this paste.
+        </p>
+      </section>
+      <p id="status" role="status" aria-live="polite"></p>
+      <nav class="below">
+        <a href="/">Create a new paste</a
+        ><span>Browser-encrypted. No third-party scripts.</span>
+      </nav>
+      <footer>
+        <span>Loggerbin <span id="version"></span></span
+        ><a
+          href="https://github.com/LoggeL/loggerbin"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Source &amp; hosting</a
+        >
+      </footer>
+      <noscript
+        ><p class="error">
+          Loggerbin needs JavaScript to encrypt and decrypt text in your
+          browser.
+        </p></noscript
+      >
+    </main>
+  </body>
+</html>
