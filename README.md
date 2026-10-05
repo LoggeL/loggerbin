@@ -14,7 +14,16 @@ docker compose up -d --build
 
 Open http://localhost:8080. Localhost supports Web Crypto. Put an HTTPS reverse proxy in front before sharing the service outside your computer. The Compose port binds only to loopback, and the container runs as UID/GID 65532 with a read-only root filesystem and a persistent private data volume.
 
-The published container name and exact release digest are documented in the GitHub release. For future automated image releases, configure the repository variable `DOCKERHUB_USERNAME` and a narrowly scoped repository secret `DOCKERHUB_TOKEN` for the container workflow. Until those are configured, that publishing job remains disabled. To run a published image through Compose, set `LOGGERBIN_IMAGE` to its full image name and version and omit `--build`.
+## Deploy with Dokploy
+
+Build directly from GitHub. No Docker Hub account or registry login is needed.
+
+1. Create a Dokploy application from this repository's main branch.
+2. Choose the Dockerfile build type, with Dockerfile at the repository root and context `.`.
+3. Add a named volume mounted at `/data`, keep one replica, and route your HTTPS domain to internal port `8080`.
+4. Enable automatic deployments on GitHub pushes. Do not publish port 8080 to the host.
+
+See [the Dokploy setup guide](docs/dokploy.md) for persistence, limits and proxy settings.
 
 ## Privacy and security
 

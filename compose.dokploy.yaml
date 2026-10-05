@@ -1,12 +1,8 @@
 services:
   loggerbin:
-    image: ${LOGGERBIN_IMAGE:-loggerbin:local}
     build:
       context: .
-      args:
-        VERSION: 1.1.0
-    ports:
-      - "127.0.0.1:8080:8080"
+      dockerfile: Dockerfile
     volumes:
       - loggerbin-data:/data
     read_only: true

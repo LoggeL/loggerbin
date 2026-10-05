@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0 (2026-10-05)
+
+- A minimal light interface based on an ImageGen design, with a focused editor and compact sharing controls.
+- Readable paste sizes, clearer expiry labels and responsive controls for small screens.
+- Direct GitHub-to-Dokploy deployment instructions with persistent private storage.
+- Container builds run without registry authentication; the Docker Hub publishing workflow is removed.
+
 ## 1.0.0 (2026-10-05)
 
 Initial Loggerbin release, forked from Vaultbin v0.2.0.

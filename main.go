@@ -17,7 +17,7 @@ import (
 	"github.com/LoggeL/loggerbin/internal/store"
 )
 
-var version = "1.0.0-dev"
+var version = "1.1.0-dev"
 
 func run() error {
 	if len(os.Args) > 1 {

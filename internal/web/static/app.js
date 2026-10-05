@@ -52,6 +52,29 @@ function checkExpiry() {
   }
 }
 
+function formatBytes(bytes) {
+  if (bytes >= 1048576)
+    return (
+      (bytes / 1048576).toLocaleString(undefined, {
+        maximumFractionDigits: 1,
+      }) + " MiB"
+    );
+  if (bytes >= 1024)
+    return (
+      (bytes / 1024).toLocaleString(undefined, { maximumFractionDigits: 1 }) +
+      " KiB"
+    );
+  return bytes.toLocaleString() + " B";
+}
+
+function updateCount() {
+  const bytes = new TextEncoder().encode($("content").value).length;
+  $("byte-count").textContent =
+    formatBytes(bytes) +
+    " / " +
+    formatBytes(settings?.max_paste_bytes ?? 65536);
+}
+
 function show(text, result, link) {
   const date = Date.parse(result.expires_at);
   if (!Number.isFinite(date) || date <= Date.now())
@@ -62,13 +85,15 @@ function show(text, result, link) {
   $("composer").hidden = true;
   $("viewer").hidden = false;
   $("sharing").hidden = false;
+  $("new-paste").hidden = false;
   $("paste-text").textContent = text;
   $("share-link").value = link;
   $("expires").textContent = "Expires " + new Date(date).toLocaleString();
   $("mode").textContent = "Encrypted paste";
-  $("byte-count").textContent =
-    new TextEncoder().encode(text).length.toLocaleString() + " bytes";
-  $("heading").textContent = "A private paste, ready to share.";
+  $("byte-count").textContent = formatBytes(
+    new TextEncoder().encode(text).length,
+  );
+  $("heading").textContent = "Your text, ready to share.";
   $("description").textContent =
     "Decrypted in this browser. Keep the complete link private.";
   checkExpiry();
@@ -86,14 +111,7 @@ async function copy(text, what) {
   }
 }
 
-$("content").addEventListener("input", () => {
-  const bytes = new TextEncoder().encode($("content").value).length;
-  $("byte-count").textContent =
-    bytes.toLocaleString() +
-    " / " +
-    (settings?.max_paste_bytes ?? 65536).toLocaleString() +
-    " bytes";
-});
+$("content").addEventListener("input", updateCount);
 $("composer").addEventListener("submit", async (event) => {
   event.preventDefault();
   if (!settings || $("create").disabled) return;
@@ -169,10 +187,11 @@ async function init() {
   try {
     settings = await api("/api/config");
     $("version").textContent = settings.version;
+    updateCount();
     const choices = [
       [600, "10 minutes"],
       [3600, "1 hour"],
-      [86400, "1 day"],
+      [86400, "24 hours"],
       [604800, "7 days"],
       [2592000, "30 days"],
     ].filter(([seconds]) => seconds <= settings.max_ttl);
@@ -212,6 +231,7 @@ async function init() {
   } catch (error) {
     erase();
     if (location.pathname.startsWith("/p/")) {
+      $("new-paste").hidden = false;
       $("heading").textContent = "This paste is unavailable.";
       $("description").textContent =
         "Check the complete link, or create a new paste.";

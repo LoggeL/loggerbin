@@ -1,4 +1,4 @@
-VERSION ?= 1.0.0
+VERSION ?= 1.1.0
 export GOTOOLCHAIN ?= go1.27.1
 .PHONY: test build security
 

@@ -1,6 +1,6 @@
 # Hosting Loggerbin
 
-Use the Compose configuration or the published image. Keep the HTTP backend reachable only by your HTTPS reverse proxy. The default Compose port binds to 127.0.0.1.
+Build from source with [Dokploy](dokploy.md) or use the local Compose configuration. Keep the HTTP backend reachable only by your HTTPS reverse proxy. The default Compose port binds to 127.0.0.1.
 
 An example Caddy configuration:
 
